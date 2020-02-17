@@ -8,7 +8,7 @@
  */
 const request = require('request');
 
-const fetchMyIP = function(callback) { 
+const fetchMyIP = function(callback) {
   // use request to fetch IP address from JSON API
   let website = "https://api.ipify.org/?format=json";
   // let website = "https://api.ipify24555.org/?format=json"; // TESTER CODE:  wrong domain to throw error
@@ -26,21 +26,21 @@ const fetchMyIP = function(callback) {
       return;
     } else {
     // console.log('body:', body); // Print the HTML for the homepage.
-    const ip = JSON.parse(body).ip; // NOTE-TO-SELF : REMEMBER : the opposite is JSON.stringify(object)
-    console.log('@iss.js --> my IP is: ', ip); // Print the HTML for the homepage.
-    callback(null, ip);
+      const ip = JSON.parse(body).ip; // NOTE-TO-SELF : REMEMBER : the opposite is JSON.stringify(object)
+      console.log('@iss.js --> my IP is: ', ip); // Print the HTML for the homepage.
+      callback(null, ip);
     }
     
 
-  })
-}
+  });
+};
 const fetchCoordsByIP = function(ip, callback) {
   // use request to fetch coordinates from API
   const coordWebsite = "https://ipvigilante.com/" + ip;
   request(coordWebsite, (error, response, body) => {
     // ERROR HANDLING
     if (error) return callback(error, null);
-    if (response.statusCode !== 200){
+    if (response.statusCode !== 200) {
       const msg = `Status Code ${response.statusCode} when fetching IP. Response: ${body}`;
       callback(Error(msg), null);
       return;
@@ -56,6 +56,6 @@ const fetchCoordsByIP = function(ip, callback) {
     console.log(coordinates);
     callback(null, coordinates);
   });
-}
+};
 
 module.exports = { fetchMyIP, fetchCoordsByIP };
